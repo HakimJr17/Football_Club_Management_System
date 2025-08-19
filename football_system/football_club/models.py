@@ -6,6 +6,9 @@ from django.db import models
 class Team(models.Model):
     name = models.CharField(max_length = 200, unique = True)
 
+    class Meta():
+        verbose_name_plural = "Team"
+
     def __str__(self):
         return self.name
 
@@ -15,6 +18,9 @@ class Player(models.Model):
     id_number = models.IntegerField()
     phone_number = models.IntegerField()
     license_number = models.CharField(max_length = 200)
+
+    class Meta():
+        verbose_name_plural = "Player"
 
     def __str__(self):
         return self.name
@@ -28,6 +34,9 @@ class Match(models.Model):
     match_start_time = models.DateTimeField()
     is_league_match = models.BooleanField(default=False)
     players = models.ManyToManyField(Player) 
+
+    class Meta():
+        verbose_name_plural = "Match"
 
     def __str__(self):
         return f"{self.home_team} vs {self.away_team_name}"
@@ -47,6 +56,9 @@ class Income(models.Model):
     source = models.CharField(max_length = 200)
     amount = models.IntegerField()
 
+    class Meta():
+        verbose_name_plural = "Income"
+
     def __str__(self):
         return f"{self.amount} from {self.source}"
     
@@ -62,6 +74,9 @@ class Expenses(models.Model):
     amount = models.IntegerField()
     date = models.DateField()
     notes = models.TextField(blank=True, null=True)
+
+    class Meta():
+        verbose_name_plural = "Expenses"
 
     def __str__(self):
         return f"{self.amount} on {self.date}"
@@ -80,6 +95,9 @@ class Equipment(models.Model):
         default='Good'
     )
     
+    class Meta():
+            verbose_name_plural = "Equipment"
+    
     def __str__(self):
         return self.name
     
@@ -87,6 +105,9 @@ class Assignment(models.Model):
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
     assigned_to = models.ForeignKey(Player, on_delete=models.CASCADE)
     date_assigned = models.DateField(auto_now_add=True)
+
+    class Meta():
+        verbose_name_plural = "Assignment"
     
     def __str__(self):
         return f"{self.equipment.name} assigned to {self.assigned_to.name}"
@@ -96,6 +117,9 @@ class TrainingSession(models.Model):
     date = models.DateField()
     players_attended = models.ManyToManyField(Player)
     notes = models.TextField(blank=True, null=True)
+
+    class Meta():
+        verbose_name_plural = "Training Session"
 
     def __str__(self):
         return f"Training on {self.date}"
