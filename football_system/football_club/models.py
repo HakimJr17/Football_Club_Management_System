@@ -40,10 +40,8 @@ class Match(models.Model):
             return self.away_team_name
         return "Draw"
 
-# The related_name is used because it allows me to access related objects from the other side of a 
-# ForeignKey relationship. Since this match model has two foreign keys pointing to the same model (Team)
-# Django would be confused on which field to use. By using related_name, each relationship now has
-# a unique name meaning its now possible to find matches where a team played as the home or away team.
+# The related_name 'home_matches' is used to create a reverse relationship from the Team model.
+# It allows us to easily find all the matches where our team was the home team.
 
 class Income(models.Model):
     source = models.CharField(max_length = 200)
