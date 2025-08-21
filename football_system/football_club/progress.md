@@ -5,3 +5,7 @@ August 19th 2025
 --> Today I worked on models.py to outline the different models to be used in my API 
 --> In the admin.py file, I have registered the different models we defined in models.py
 --> Next, I am working on creating the superuser
+
+August 20th 2025
+
+--> Today I am working on setting up the views.py file for my Django App
