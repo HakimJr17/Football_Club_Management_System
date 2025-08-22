@@ -88,9 +88,11 @@ class Equipment(models.Model):
     condition = models.CharField(max_length=50, 
         choices=[
             ('Good', 'Good'),
+            ('New', 'New'),
             ('Fair', 'Fair'),
             ('Poor', 'Poor'),
-            ('Broken', 'Broken')
+            ('Broken', 'Broken'),
+            ('Repaired', 'Repaired'),
         ],
         default='Good'
     )
