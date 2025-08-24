@@ -35,7 +35,7 @@ class Profile(models.Model):
         return self.user.username
 
 class Player(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     position = models.CharField(max_length = 50)
     id_number = models.IntegerField()
     phone_number = models.IntegerField()
