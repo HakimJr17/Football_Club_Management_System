@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from .models import Player
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 from .models import Team, Player, Match, Income, Expenses, Equipment, Assignment, TrainingSession
 

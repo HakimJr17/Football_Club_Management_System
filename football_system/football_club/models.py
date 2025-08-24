@@ -1,7 +1,19 @@
 from django.db import models
+from django.contrib.auth.models import User
 
+# defining the roles
+
+ROLE_CHOICES = (
+    ('coach', 'Coach'),
+    ('manager', 'Team Manager'),
+    ('player', 'Player'),
+    ('captain', 'captain'),
+    ('secretary', 'Club Secretary'),
+)
 
 # Create your models here.
+
+# Model holds a team's info
 
 class Team(models.Model):
     name = models.CharField(max_length = 200, unique = True)
@@ -11,9 +23,19 @@ class Team(models.Model):
 
     def __str__(self):
         return self.name
+    
+ # Model provides a role for every user   
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
+
+    def __str__(self):
+        return self.user.username
 
 class Player(models.Model):
-    name = models.CharField(max_length=200)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     position = models.CharField(max_length = 50)
     id_number = models.IntegerField()
     phone_number = models.IntegerField()
@@ -23,7 +45,7 @@ class Player(models.Model):
         verbose_name_plural = "Player"
 
     def __str__(self):
-        return self.name
+        return self.user.username
 
 
 class Match(models.Model):

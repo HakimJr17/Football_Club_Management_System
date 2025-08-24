@@ -20,3 +20,10 @@ Here I'll document the steps I will be taking during the project's completion fr
 
 --> I have also updated the models.py file 
     --> in the Equipment model (added a new as one of the choices)
+
+
+August 23rd 2025
+--> Added rest_framework as one of the INSTALLED APPS in the project level settings.py
+--> Added the REST_FRAMEWORK dictionary to the project level settings.py 
+    --> covers Authentication (authentication.TokenAuthentication) and Permissions (permissions.IsAuthenticated)
+--> Added the permissions.py file to help with customizing the permissions 
