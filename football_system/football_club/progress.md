@@ -22,8 +22,18 @@ Here I'll document the steps I will be taking during the project's completion fr
     --> in the Equipment model (added a new as one of the choices)
 
 
-August 23rd 2025
+                                            August 23rd 2025
+
 --> Added rest_framework as one of the INSTALLED APPS in the project level settings.py
 --> Added the REST_FRAMEWORK dictionary to the project level settings.py 
     --> covers Authentication (authentication.TokenAuthentication) and Permissions (permissions.IsAuthenticated)
 --> Added the permissions.py file to help with customizing the permissions 
+
+                                            August 24th 2025
+
+--> Refined the api_views.py file with the class and their respective authentication and permissions
+--> Refined the permissions.py with the views that will be controlling the access to my API endpoints.
+
+                                            August 25th 2025
+
+--> Working on the app level urls.py file 
