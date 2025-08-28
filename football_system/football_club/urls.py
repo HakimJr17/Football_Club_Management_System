@@ -1,7 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .api_views import (
-    TeamViewSet, 
     PlayerViewSet, 
     MatchViewSet, 
     IncomeViewSet, 
@@ -13,7 +12,6 @@ from .api_views import (
 
 # Creating the router and registering the ViewSets with it
 router = DefaultRouter()
-router.register(r'team', TeamViewSet)
 router.register(r'player', PlayerViewSet)
 router.register(r'match', MatchViewSet)
 router.register(r'income', IncomeViewSet)

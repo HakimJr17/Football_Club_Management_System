@@ -1,12 +1,23 @@
 from rest_framework import serializers
-from .models import Team, Player, Match, Income, Expenses, Equipment, Assignment, TrainingSession
+from .models import Role, Profile, Player, Match, Income, Expenses, Equipment, Assignment, TrainingSession
 
-                                # Serializer for Team Model
+                   
 
-class TeamSerializer(serializers.ModelSerializer):
+                                # Serializer for Role  Model
+class RoleSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Team
-        fields = '__all__'
+        model = Role
+        fields = ['name']
+        
+                                # Serializer for Profile  Model
+
+class ProfileSerializer(serializers.ModelSerializer):
+    roles = RoleSerializer(many=True, read_only=True)
+    user = serializers.StringRelatedField(read_only=True)
+
+    class Meta:
+        model = Profile
+        fields = ['user', 'roles']
 
                                 # Serializer for Player Model
 
@@ -18,6 +29,8 @@ class PlayerSerializer(serializers.ModelSerializer):
                                 # Serializer for Match Model
 
 class MatchSerializer(serializers.ModelSerializer):
+    players = serializers.StringRelatedField(many=True, read_only=True)
+
     class Meta:
         model = Match
         fields = '__all__'
@@ -53,6 +66,8 @@ class AssignmentSerializer(serializers.ModelSerializer):
                                 # Serializer for TrainingSession Model
 
 class TrainingSessionSerializer(serializers.ModelSerializer):
+    players_attended = serializers.StringRelatedField(many=True, read_only=True)
+
     class Meta:
         model = TrainingSession
         fields = '__all__'

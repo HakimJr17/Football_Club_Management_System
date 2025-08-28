@@ -1,20 +1,11 @@
 from rest_framework import viewsets
-from .models import Team, Player, Match, Income, Expenses, Equipment, Assignment, TrainingSession
-from .serializers import TeamSerializer, PlayerSerializer, MatchSerializer, IncomeSerializer, ExpensesSerializer, EquipmentSerializer, AssignmentSerializer, TrainingSessionSerializer
+from .models import Player, Match, Income, Expenses, Equipment, Assignment, TrainingSession
+from .serializers import PlayerSerializer, MatchSerializer, IncomeSerializer, ExpensesSerializer, EquipmentSerializer, AssignmentSerializer, TrainingSessionSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from .permissions import IsCaptainOrManagerSecretaryCoachReadOnly, IsCaptainOrIsManagerOrIsCoach, IsManagerOrReadOnly, IsClubSecretaryOrManagerReadOnly, IsCaptainOrIsCoachOrManagerSecretaryReadOnly
 
-                                            # API viewset for Team model
 
-# Only logged-in managers can perform unsafe operations to the team models
-# All other users can only view the data
-
-class TeamViewSet(viewsets.ModelViewSet):
-    queryset = Team.objects.all()
-    serializer_class = TeamSerializer
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated, IsManagerOrReadOnly | IsAdminUser]
 
                                         # API viewset for Player model
 
@@ -79,6 +70,10 @@ class AssignmentViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsCaptainOrManagerSecretaryCoachReadOnly | IsAdminUser]
 
                                         # API endpoint for TrainingSession
+
+# captain and coach have full access
+# manager and secretary have read only access
+# other users have no access
 
 class TrainingSessionViewSet(viewsets.ModelViewSet):
     queryset = TrainingSession.objects.all()

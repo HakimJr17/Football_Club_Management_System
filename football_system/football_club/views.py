@@ -1,28 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
-from .models import Team, Player, Match, Income, Expenses, Equipment, Assignment, TrainingSession
+from .models import Player, Match, Income, Expenses, Equipment, Assignment, TrainingSession
 
-
-
-                                        # Views Associated with the Team Model
-
-# view for creating a team object
-class TeamCreateView(CreateView):
-    model = Team
-    template_name = 'football_club/create_team.html'
-    fields = '__all__'
-
-# view for details of a team object
-class TeamDetailView(DetailView):
-    model = Team
-    template_name = 'football_club/team_details.html'
-    context_object_name = 'team'
-
-# view for updating the details of a team object
-class TeamUpdateView(UpdateView):
-    model = Team
-    template_name = 'football_club/update_team_details.html'
-    fields = '__all__'
 
                                     # Views Associated with the Player model
 

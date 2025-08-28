@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚽ Football Club API Demo</title>
+    <!-- Use Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-8">
+
+    <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+
+        <h1 class="text-4xl font-bold text-center text-gray-800 mb-6">Football Club API ⚽</h1>
+        <p class="text-center text-gray-600 mb-8">
+            This demo helps to show different functionalities of the API I have just made.
+        </p>
+        
+        <!-- Login Section -->
+        <div class="bg-blue-50 p-6 rounded-lg mb-8 border-l-4 border-blue-500">
+            <h2 class="text-2xl font-bold text-blue-800 mb-4">🔑 Login & Authentication</h2>
+            <form id="loginForm" class="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0 items-end">
+                <div class="flex-1">
+                    <label for="username" class="block text-sm font-medium text-gray-700">Username:</label>
+                    <input type="text" id="username" name="username" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3 py-2" placeholder="e.g., manager_user">
+                </div>
+                <div class="flex-1">
+                    <label for="password" class="block text-sm font-medium text-gray-700">Password:</label>
+                    <input type="password" id="password" name="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 px-3 py-2" placeholder="e.g., password123">
+                </div>
+                <button type="submit" class="w-full md:w-auto px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                    Login
+                </button>
+            </form>
+            <p id="loginStatus" class="mt-4 text-center text-sm font-medium"></p>
+        </div>
+
+        <!-- Permissions Testing Section -->
+        <div id="permissionsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- Test IsManagerOrReadOnly -->
+            <div class="bg-gray-50 p-6 rounded-lg border-l-4 border-indigo-500">
+                <h3 class="text-xl font-semibold text-indigo-800 mb-2">Team & Player Data</h3>
+                <p class="text-sm text-gray-600 mb-4">Managers have full access, all others are read-only.</p>
+                <div class="flex space-x-2">
+                    <button class="px-6 py-2 rounded-md shadow-md font-medium text-white transition-all duration-300 transform hover:scale-105 bg-indigo-600 hover:bg-indigo-700" data-url="/football_club/teams/" data-method="GET" data-target="teamPlayerResponse">Get Team</button>
+                    <button class="px-6 py-2 rounded-md shadow-md font-medium text-white transition-all duration-300 transform hover:scale-105 bg-red-600 hover:bg-red-700" data-url="/football_club/teams/" data-method="POST" data-target="teamPlayerResponse" data-data='{"name": "New Team"}' data-success="201">Create Team</button>
+                </div>
+                <pre id="teamPlayerResponse" class="mt-4 p-3 bg-gray-200 rounded-md text-sm text-gray-800 whitespace-pre-wrap"></pre>
+            </div>
+
+            <!-- Test IsCaptainOrIsManagerOrIsCoach -->
+            <div class="bg-gray-50 p-6 rounded-lg border-l-4 border-green-500">
+                <h3 class="text-xl font-semibold text-green-800 mb-2">Match Data</h3>
+                <p class="text-sm text-gray-600 mb-4">Captains, Managers, Coaches have full access; others are read-only.</p>
+                <div class="flex space-x-2">
+                    <button class="px-6 py-2 rounded-md shadow-md font-medium text-white transition-all duration-300 transform hover:scale-105 bg-green-600 hover:bg-green-700" data-url="/football_club/matches/" data-method="GET" data-target="matchResponse">Get Matches</button>
+                    <button class="px-6 py-2 rounded-md shadow-md font-medium text-white transition-all duration-300 transform hover:scale-105 bg-red-600 hover:bg-red-700" data-url="/football_club/matches/" data-method="POST" data-target="matchResponse" data-data='{"opponent": "Test Opponent", "date": "2025-08-28"}' data-success="201">Create Match</button>
+                </div>
+                <pre id="matchResponse" class="mt-4 p-3 bg-gray-200 rounded-md text-sm text-gray-800 whitespace-pre-wrap"></pre>
+            </div>
+
+            <!-- Test IsSecretaryOrManagerReadOnly -->
+            <div class="bg-gray-50 p-6 rounded-lg border-l-4 border-yellow-500">
+                <h3 class="text-xl font-semibold text-yellow-800 mb-2">Income & Expenses</h3>
+                <p class="text-sm text-gray-600 mb-4">Secretaries have full access; Managers are read-only; others are denied.</p>
+                <div class="flex space-x-2">
+                    <button class="px-6 py-2 rounded-md shadow-md font-medium text-white transition-all duration-300 transform hover:scale-105 bg-yellow-600 hover:bg-yellow-700" data-url="/football_club/income/" data-method="GET" data-target="financeResponse">Get Income</button>
+                    <button class="px-6 py-2 rounded-md shadow-md font-medium text-white transition-all duration-300 transform hover:scale-105 bg-red-600 hover:bg-red-700" data-url="/football_club/income/" data-method="POST" data-target="financeResponse" data-data='{"amount": 500, "source": "Sponsorship"}' data-success="201">Create Income</button>
+                </div>
+                <pre id="financeResponse" class="mt-4 p-3 bg-gray-200 rounded-md text-sm text-gray-800 whitespace-pre-wrap"></pre>
+            </div>
+
+            <!-- Test IsCaptainOrManagerSecretaryCoachReadOnly -->
+            <div class="bg-gray-50 p-6 rounded-lg border-l-4 border-purple-500">
+                <h3 class="text-xl font-semibold text-purple-800 mb-2">Equipment & Assignments</h3>
+                <p class="text-sm text-gray-600 mb-4">Captains have full access, others are read-only.</p>
+                <div class="flex space-x-2">
+                    <button class="px-6 py-2 rounded-md shadow-md font-medium text-white transition-all duration-300 transform hover:scale-105 bg-purple-600 hover:bg-purple-700" data-url="/football_club/equipment/" data-method="GET" data-target="equipmentResponse">Get Equipment</button>
+                    <button class="px-6 py-2 rounded-md shadow-md font-medium text-white transition-all duration-300 transform hover:scale-105 bg-red-600 hover:bg-red-700" data-url="/football_club/equipment/" data-method="POST" data-target="equipmentResponse" data-data='{"name": "New Ball", "quantity": 10}' data-success="201">Create Equipment</button>
+                </div>
+                <pre id="equipmentResponse" class="mt-4 p-3 bg-gray-200 rounded-md text-sm text-gray-800 whitespace-pre-wrap"></pre>
+            </div>
+            
+            <!-- Test IsCaptainOrIsCoachOrManagerSecretaryReadOnly -->
+            <div class="bg-gray-50 p-6 rounded-lg border-l-4 border-orange-500">
+                <h3 class="text-xl font-semibold text-orange-800 mb-2">Training Sessions</h3>
+                <p class="text-sm text-gray-600 mb-4">Captains, Coaches have full access; Managers, Secretaries are read-only.</p>
+                <div class="flex space-x-2">
+                    <button class="px-6 py-2 rounded-md shadow-md font-medium text-white transition-all duration-300 transform hover:scale-105 bg-orange-600 hover:bg-orange-700" data-url="/football_club/trainingsessions/" data-method="GET" data-target="trainingResponse">Get Training</button>
+                    <button class="px-6 py-2 rounded-md shadow-md font-medium text-white transition-all duration-300 transform hover:scale-105 bg-red-600 hover:bg-red-700" data-url="/football_club/trainingsessions/" data-method="POST" data-target="trainingResponse" data-data='{"date": "2025-08-28", "duration": 90}' data-success="201">Create Training</button>
+                </div>
+                <pre id="trainingResponse" class="mt-4 p-3 bg-gray-200 rounded-md text-sm text-gray-800 whitespace-pre-wrap"></pre>
+            </div>
+
+        </div>
+    </div>
+    
+    <script>
+        // Store the base URL for the API
+        const BASE_URL = 'http://127.0.0.1:8000';
+        // A global variable to hold the authentication token
+        let authToken = null;
+        
+        // --- Event Listeners and Handlers ---
+        
+        // Handle the login form submission
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = e.target.username.value;
+            const password = e.target.password.value;
+            const loginStatus = document.getElementById('loginStatus');
+
+            try {
+                // Send a POST request to the built-in DRF login endpoint
+                const response = await fetch(`${BASE_URL}/auth/token/login/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    authToken = data.auth_token;
+                    loginStatus.textContent = `Login successful! Token received.`;
+                    loginStatus.className = 'mt-4 text-center text-sm font-medium text-green-600';
+                    console.log('Auth Token:', authToken);
+                } else {
+                    const error = await response.json();
+                    loginStatus.textContent = `Login failed: ${JSON.stringify(error)}`;
+                    loginStatus.className = 'mt-4 text-center text-sm font-medium text-red-600';
+                    authToken = null;
+                }
+            } catch (error) {
+                loginStatus.textContent = `An error occurred: ${error.message}`;
+                loginStatus.className = 'mt-4 text-center text-sm font-medium text-red-600';
+                authToken = null;
+            }
+        });
+
+        // Set up event listeners for all action buttons
+        document.querySelectorAll('button:not([type="submit"])').forEach(button => {
+            button.addEventListener('click', () => {
+                // Get data from the button's data attributes
+                const url = BASE_URL + button.dataset.url;
+                const method = button.dataset.method;
+                const targetId = button.dataset.target;
+                const data = button.dataset.data ? JSON.parse(button.dataset.data) : null;
+                const responseElement = document.getElementById(targetId);
+
+                makeRequest(method, url, data, responseElement);
+            });
+        });
+
+        // --- Core API Request Function ---
+        
+        // A reusable function to make an API request with the token and display the result
+        async function makeRequest(method, url, data = null, responseElement) {
+            responseElement.textContent = 'Loading...';
+            if (!authToken) {
+                responseElement.textContent = 'Please log in first.';
+                responseElement.className = 'mt-4 p-3 bg-red-200 rounded-md text-sm text-red-800 whitespace-pre-wrap';
+                return;
+            }
+            
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Token ${authToken}` // Key for authentication!
+                    },
+                    body: data ? JSON.stringify(data) : null
+                });
+
+                const responseText = await response.text();
+                const status = response.status;
+                
+                let displayText = `Status: ${status} ${response.statusText}\n\n`;
+                
+                try {
+                    // Try to pretty-print JSON responses
+                    const jsonResponse = JSON.parse(responseText);
+                    displayText += JSON.stringify(jsonResponse, null, 2);
+                } catch (e) {
+                    // If not JSON, just show the plain text
+                    displayText += responseText;
+                }
+
+                responseElement.textContent = displayText;
+
+                if (status >= 200 && status < 300) {
+                    responseElement.className = 'mt-4 p-3 bg-green-200 rounded-md text-sm text-green-800 whitespace-pre-wrap';
+                } else if (status === 403) {
+                    responseElement.className = 'mt-4 p-3 bg-yellow-200 rounded-md text-sm text-yellow-800 whitespace-pre-wrap';
+                } else {
+                    responseElement.className = 'mt-4 p-3 bg-red-200 rounded-md text-sm text-red-800 whitespace-pre-wrap';
+                }
+
+            } catch (error) {
+                responseElement.textContent = `An error occurred: ${error.message}`;
+                responseElement.className = 'mt-4 p-3 bg-red-200 rounded-md text-sm text-red-800 whitespace-pre-wrap';
+            }
+        }
+    </script>
+
+</body>
+</html>
