@@ -1,10 +1,9 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 from .models import Player, Match, Income, Expenses, Equipment, Assignment, TrainingSession
 from .serializers import PlayerSerializer, MatchSerializer, IncomeSerializer, ExpensesSerializer, EquipmentSerializer, AssignmentSerializer, TrainingSessionSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from .permissions import IsCaptainOrManagerSecretaryCoachReadOnly, IsCaptainOrIsManagerOrIsCoach, IsManagerOrReadOnly, IsClubSecretaryOrManagerReadOnly, IsCaptainOrIsCoachOrManagerSecretaryReadOnly
-
 
 
                                         # API viewset for Player model

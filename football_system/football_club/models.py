@@ -25,9 +25,9 @@ class Profile(models.Model):
 class Player(models.Model):
     name = models.CharField(max_length = 50, unique = True, default = 'Unknown')
     position = models.CharField(max_length = 50)
-    id_number = models.IntegerField()
-    phone_number = models.IntegerField()
-    license_number = models.CharField(max_length = 200)
+    id_number = models.IntegerField(unique = True)
+    phone_number = models.IntegerField(unique = True)
+    license_number = models.CharField(max_length = 200, unique = True)
 
     class Meta():
         verbose_name_plural = "Player"

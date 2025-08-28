@@ -7,7 +7,7 @@ from .api_views import (
     ExpensesViewSet, 
     EquipmentViewSet, 
     AssignmentViewSet, 
-    TrainingSessionViewSet
+    TrainingSessionViewSet,
 )
 
 # Creating the router and registering the ViewSets with it
