@@ -59,6 +59,9 @@ class EquipmentSerializer(serializers.ModelSerializer):
                                 # Serializer for Assignment Model
 
 class AssignmentSerializer(serializers.ModelSerializer):
+    assigned_to = serializers.StringRelatedField(read_only=True)
+    equipment = serializers.StringRelatedField(read_only=True)
+
     class Meta:
         model = Assignment
         fields = '__all__'
