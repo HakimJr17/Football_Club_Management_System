@@ -59,12 +59,22 @@ class EquipmentSerializer(serializers.ModelSerializer):
                                 # Serializer for Assignment Model
 
 class AssignmentSerializer(serializers.ModelSerializer):
+    equipment_name = serializers.CharField(write_only=True)
     assigned_to = serializers.StringRelatedField(read_only=True)
     equipment = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = Assignment
         fields = '__all__'
+
+    def create(self, validated_data):
+        equipment_name = validated_data.pop('equipment_name')
+        try:
+            equipment = Equipment.objects.get(name=equipment_name)
+        except Equipment.DoesNotExist:
+            raise serializers.ValidationError({"equipment_name": "Equipment with this name does not exist."})
+        validated_data['equipment'] = equipment
+        return super().create(validated_data)
 
                                 # Serializer for TrainingSession Model
 
