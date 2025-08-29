@@ -59,9 +59,9 @@ class EquipmentSerializer(serializers.ModelSerializer):
                                 # Serializer for Assignment Model
 
 class AssignmentSerializer(serializers.ModelSerializer):
-    # These fields are for POST requests, allowing you to use the names.
-    equipment_name = serializers.CharField(write_only=True)
-    assigned_to_name = serializers.CharField(write_only=True)
+    # These fields are for POST/PUT/PATCH requests, allowing you to use the names.
+    equipment_name = serializers.CharField(write_only=True, required=False)
+    assigned_to_name = serializers.CharField(write_only=True, required=False)
 
     # These fields are for the API response, making it human-readable.
     assigned_to = serializers.StringRelatedField(read_only=True)
@@ -87,6 +87,24 @@ class AssignmentSerializer(serializers.ModelSerializer):
         validated_data['equipment'] = equipment
         validated_data['assigned_to'] = assigned_to
         return super().create(validated_data)
+    
+
+    def update(self, instance, validated_data):
+        if 'assigned_to_name' in validated_data:
+            assigned_to_name = validated_data.pop('assigned_to_name')
+            try:
+                assigned_to = Player.objects.get(name=assigned_to_name)
+                instance.assigned_to = assigned_to
+            except Player.DoesNotExist:
+                raise serializers.ValidationError({"assigned_to_name": "Player with this name does not exist."})
+        if 'equipment_name' in validated_data:
+            equipment_name = validated_data.pop('equipment_name')
+            try:
+                equipment = Equipment.objects.get(name=equipment_name)
+                instance.equipment = equipment
+            except Equipment.DoesNotExist:
+                raise serializers.ValidationError({"equipment_name": "Equipment with this name does not exist."})
+        return super().update(instance, validated_data)
 
                                 # Serializer for TrainingSession Model
 
