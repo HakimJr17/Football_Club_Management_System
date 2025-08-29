@@ -1,4 +1,4 @@
-                                      # Local Football Club Management System
+# Local Football Club Management System
 ## Project Overview
   This is an API-driven solution designed to digitize and centralize the management of a local football club's day-to-day operations. It provides a secure, role-based system for managing key data and business logic, which will serve as the foundation for a future front-end application.
 
