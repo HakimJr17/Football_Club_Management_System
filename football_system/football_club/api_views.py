@@ -3,7 +3,7 @@ from .models import Player, Match, Income, Expenses, Equipment, Assignment, Trai
 from .serializers import PlayerSerializer, MatchSerializer, IncomeSerializer, ExpensesSerializer, EquipmentSerializer, AssignmentSerializer, TrainingSessionSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from .permissions import IsCaptainOrManagerSecretaryCoachReadOnly, IsCaptainOrIsManagerOrIsCoach, IsManagerOrReadOnly, IsClubSecretaryOrManagerReadOnly, IsCaptainOrIsCoachOrManagerSecretaryReadOnly
+from .permissions import IsCaptainOrIsManagerOrCoachSecretaryReadOnly, IsCaptainOrManagerSecretaryCoachReadOnly, IsCaptainOrIsManagerOrIsCoach, IsManagerOrReadOnly, IsClubSecretaryOrManagerReadOnly, IsCaptainOrIsCoachOrManagerSecretaryReadOnly
 
 
                                         # API viewset for Player model
@@ -52,13 +52,13 @@ class ExpensesViewSet(viewsets.ModelViewSet):
 
                                         # API ViewSet for Equipment Model
 
-# Logged in captains and Managers can perform unsafe operations,                                        
+# Logged in captains and Managers can perform unsafe operations, coach and secretary have read access only                                       
 
 class EquipmentViewSet(viewsets.ModelViewSet):
     queryset = Equipment.objects.all()
     serializer_class = EquipmentSerializer
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated, IsCaptainOrManagerSecretaryCoachReadOnly | IsAdminUser]
+    permission_classes = [IsAuthenticated, IsCaptainOrIsManagerOrCoachSecretaryReadOnly | IsAdminUser]
 
                                         # API ViewSet for Assignment Model
 
